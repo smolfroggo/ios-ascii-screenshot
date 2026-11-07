@@ -1,0 +1,45 @@
+name: AsciiScreen
+options:
+  bundleIdPrefix: com.smolfroggo
+  deploymentTarget:
+    iOS: "27.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: ""
+targets:
+  AsciiScreen:
+    type: application
+    platform: iOS
+    # Core/ is compiled into the app directly (its types are internal); Package.swift builds it for tests.
+    sources: [App, Core]
+    dependencies:
+      - sdk: libz.tbd
+      - sdk: libsqlite3.tbd
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: ASCII Screen
+        UILaunchScreen: {}
+        UIRequiresFullScreen: true
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIFileSharingEnabled: true
+        LSSupportsOpeningDocumentsInPlace: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.smolfroggo.ascii-screen
+      configs:
+        Release:
+          SWIFT_OPTIMIZATION_LEVEL: -Ounchecked
+          SWIFT_COMPILATION_MODE: wholemodule
+schemes:
+  AsciiScreen:
+    build:
+      targets:
+        AsciiScreen: all
+    run:
+      # Unoptimized Swift is far too slow for the per-pixel diff and line detection at 1 fps.
+      config: Release
+    archive:
+      config: Release
