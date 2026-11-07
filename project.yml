@@ -26,6 +26,8 @@ targets:
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         UIFileSharingEnabled: true
         LSSupportsOpeningDocumentsInPlace: true
+        # Without this, iOS stops full-display capture when the app is backgrounded (SCStreamError.missingBackgroundMode).
+        UIBackgroundModes: [screen-capture]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.smolfroggo.ascii-screen
